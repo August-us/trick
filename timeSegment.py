@@ -158,14 +158,14 @@ def report(data,type,year=2019,month=0,week=0,day=0):
 if __name__ == '__main__':
     data=pd.read_excel(r'D:\document\Dinary\2019\timeAllocation.xlsx')
     # ['计算机专业', '语言能力', '视野广度', '健身和打理', '社交', '意识提升']
-    data.loc[len(data)]=['20190820',2,0,0,1.8,2,0]
+    data.loc[len(data)]=['20190927',6,0.,1,0,1.0,0.]
     # test(data)
     date=str(data.loc[len(data)-1]['时间'])
     date=list(map(int,[date[0:4],date[4:6],date[6:8]]))
     week=datetime(date[0],date[1],date[2]).isocalendar()[1]-22
     index=week*7
     # print(data[index:])
-    # data_pic(report(data,type='m',month=7),'月')
+    # data_pic(report(data,type='m',month=8),'月')
     # print(data[index:])
     data_pic(data[index:])
     data.to_excel(r'D:\document\Dinary\2019\timeAllocation.xlsx',index=False)

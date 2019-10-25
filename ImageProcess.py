@@ -6,7 +6,7 @@ import copy
 
 #python 图像翻转,自定义翻转
 
-img = cv.imread(r'C:\Users\Administrator\Desktop\1.png')
+img = cv.imread(r'./test.jpg')
 
 def flip():
     if img.all()==None:
@@ -67,4 +67,7 @@ def Dewatermark():
 
 
 if __name__=='__main__':
-    Dewatermark()
+    print(img.shape)
+    img=cv.flip(img,1)
+    cv.imshow('',img)
+    cv.waitKey()

@@ -90,9 +90,9 @@ def data_pic(data,time='周'):
     '''
     plt.subplot(224)  # 调节图形大小
     colors = ['red', 'yellowgreen', 'lightskyblue', 'yellow']  # 每块颜色定义
-    explode = [0]*len(x)  # 将某一块分割出来，值越大分割出的间隙越大
+    explode = [0.01]*len(x)  # 将某一块分割出来，值越大分割出的间隙越大
     patches, text1, text2 = plt.pie(ytotal,
-                                    # explode=explode,
+                                    explode=explode,
                                     labels=labels,
                                     counterclock=False,
                                     # colors=colors,
@@ -158,7 +158,7 @@ def report(data,type,year=2019,month=0,week=0,day=0):
 if __name__ == '__main__':
     data=pd.read_excel(r'D:\document\Dinary\2019\timeAllocation.xlsx')
     # ['计算机专业', '语言能力', '视野广度', '健身和打理', '社交', '意识提升']
-    data.loc[len(data)]=['20190927',6,0.,1,0,1.0,0.]
+    # data.loc[len(data)]=['20190927',6,0.,1,0,1.0,0.]
     # test(data)
     date=str(data.loc[len(data)-1]['时间'])
     date=list(map(int,[date[0:4],date[4:6],date[6:8]]))
@@ -168,5 +168,4 @@ if __name__ == '__main__':
     # data_pic(report(data,type='m',month=8),'月')
     # print(data[index:])
     data_pic(data[index:])
-    data.to_excel(r'D:\document\Dinary\2019\timeAllocation.xlsx',index=False)
-
+    # data.to_excel(r'D:\document\Dinary\2019\timeAllocation.xlsx',index=False)

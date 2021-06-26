@@ -1,19 +1,21 @@
 import imghdr
 import os,shutil
-import filetype
+from filetype import filetype
+import glob
 
-dir=os.listdir('emoji')
-k=1
+dir=glob.glob('E:\paper\VQVAE\Image\Group2\**\*', recursive=True)
+
+
 for file in dir:
-    f=os.path.join('emoji',file)
-    p=imghdr.what(f)
-    n=filetype.guess(f)
-    print(n)
+    # print(file)
+    if os.path.isfile(file):
 
-    if p:
-        shutil.move(f,os.path.join('emoji','%s.%s'%(str(k),str(p))))
-        k+=1
-    # else:
-    #     os.remove(f)
+        p=imghdr.what(file)
+        # print(os.path.split(file)[-1])
+        # input()
+        # if p != file.split('.')[-1]:
+        # shutil.move(file, file+'.%s'%p)
+        shutil.move(file, 'E:\paper\VQVAE\Image\Group2\%s'%os.path.split(file)[-1])
+
 
 

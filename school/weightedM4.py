@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import numpy as np
 import openpyxl
 pd.set_option('display.max_rows', None)
 
@@ -87,10 +86,10 @@ def wrost():
             print(stu['姓名'].values[0],stu['不及格门数'].values[0])
     import numpy as np
     res['学号'] = res['学号'].astype(np.int64).astype(str)
-    print((data['学位课平均分']>=75.0))
     ind=~((np.isnan(data['不及格门数']))& (data['学位课平均分']>=75.0))
     data=data[ind]
-    data.to_excel('dmt/不及格学生统计.xlsx', header=True,index=False)
+    print(data.ix[:,['不及格门数','学位课平均分']])
+    # data.to_excel('dmt/不及格学生统计.xlsx', header=True,index=False)
 
     # res.to_excel('dmt/5组学生统计.xlsx', header=True,index=False)
 
@@ -126,5 +125,38 @@ def checkStudents():
     print(data.__len__())
 
 
+def rank():
+    hanging=pd.read_excel('dmt/不及格学生统计.xlsx', header=0,converters={'姓名':str,'学号':str})  # 挂科
+
+    path='18奖学金'
+    # hanging['学号']=hanging['学号'].apply(lambda x:x[:-1])
+    print(hanging['学号'])
+    column=['M4模块（10%）','Unnamed: 5','M3模块（40%）','M2模块（50%）']
+    for file in os.listdir(path):
+        # if file!='18级沈玉龙.xlsx':
+        #     continue
+        if file.split('.')[1]=='xlsx':
+            filename=os.path.join(path,file)
+            print(filename)
+            data = pd.read_excel(filename, header=0, converters={'学号': str})
+            # for row in data.itertuples():
+                # if getattr(row,'学号') in hanging['学号'].values:   # 挂科
+                #     if getattr(row,'等级')!='无' and getattr(row,'等级') and str(getattr(row,'等级'))!='nan':
+                #         print(row)
+
+            if 'Unnamed: 5' in data.columns:
+                data['总分']=(data['M3模块（40%）']+data['Unnamed: 5'])*0.4+data['M2模块（50%）']*0.5+data['M4模块（10%）']*0.1
+
+            else:
+                data['总分'] = data['M3模块（40%）']*0.4+data['M2模块（50%）']*0.5+data['M4模块（10%）']*0.1
+            print(data['总分'])
+            data.sort_values('总分',inplace=True,ascending=False)
+            if '序号' in data.columns:
+                del data['序号']
+            data.to_excel(os.path.join('res',file.split('.')[0]+'总分.xlsx'),header=True,index=False)
+
+
 if __name__ == '__main__':
-    checkStudents()
+    # rank()
+    wrost()
+
